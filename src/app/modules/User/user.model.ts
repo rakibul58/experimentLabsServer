@@ -26,7 +26,7 @@ const userSchema = new Schema<TUser, UserModel>(
     },
     googleId: {
       type: String,
-      default: null
+      default: null,
     },
     passwordChangedAt: {
       type: Date,
@@ -36,9 +36,9 @@ const userSchema = new Schema<TUser, UserModel>(
       default: false,
     },
     organization: {
-      type: String, 
-      default: null  
-    }
+      type: String || null,
+      default: null,
+    },
   },
   {
     timestamps: true,
@@ -62,15 +62,20 @@ userSchema.post('save', function (doc, next) {
   next();
 });
 
-userSchema.statics.isUserExistsByCustomId = async function (id: string) {
-  return await User.findOne({ id }).select('+password');
+userSchema.statics.isUserExistsByEmailAndOrganization = async function (
+  email: string,
+  organization: string,
+) {
+  return await User.findOne({ email, organization }).select('+password');
 };
 
 userSchema.statics.isPasswordMatched = async function (
   plainTextPassword,
   hashedPassword,
 ) {
-  return await bcrypt.compare(plainTextPassword, hashedPassword);
+  const result = await bcrypt.compare(plainTextPassword, hashedPassword);
+
+  return result;
 };
 
 userSchema.statics.isJWTIssuedBeforePasswordChanged = function (
