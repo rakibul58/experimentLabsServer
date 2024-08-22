@@ -27,15 +27,18 @@ const auth = (...requiredRoles: TUserRole[]) => {
       throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized!');
     }
 
-    const { role, email, organization , iat } = decoded;
+    const { role, email, organization, iat } = decoded;
 
     // checking if the user is exist
-    const user = await User.isUserExistsByEmailAndOrganization(email , organization);
+    const user = await User.isUserExistsByEmailAndOrganization(
+      email,
+      organization,
+    );
 
     if (!user) {
       throw new AppError(httpStatus.NOT_FOUND, 'This user is not found!');
     }
-    
+
     // checking if the user is already deleted
     const isDeleted = user?.isDeleted;
     if (isDeleted) {
@@ -53,10 +56,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
     }
 
     if (requiredRoles && !requiredRoles.includes(role)) {
-      throw new AppError(
-        httpStatus.UNAUTHORIZED,
-        'You are not authorized!',
-      );
+      throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized!');
     }
 
     req.user = decoded as JwtPayload;
