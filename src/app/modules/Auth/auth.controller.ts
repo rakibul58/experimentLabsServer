@@ -52,12 +52,12 @@ const refreshToken = catchAsync(async (req, res) => {
 });
 
 const forgetPassword = catchAsync(async (req, res) => {
-  // const userId = req.body.id;
-  const result = await AuthServices.forgetPassword();
+  const { email, organization } = req.body;
+  const result = await AuthServices.forgetPassword(email, organization);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Reset link is generated succesfully!',
+    message: 'Reset link is generated successfully!',
     data: result,
   });
 });
@@ -69,11 +69,11 @@ const resetPassword = catchAsync(async (req, res) => {
     throw new AppError(httpStatus.BAD_REQUEST, 'Something went wrong !');
   }
 
-  const result = await AuthServices.resetPassword();
+  const result = await AuthServices.resetPassword(req.body, token);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Password reset succesfully!',
+    message: 'Password reset successfully!',
     data: result,
   });
 });
