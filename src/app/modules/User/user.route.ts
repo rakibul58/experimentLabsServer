@@ -2,16 +2,16 @@
 import express from 'express';
 import auth from '../../middlewares/auth';
 import validateRequest from '../../middlewares/validateRequest';
-import { createStudentValidationSchema } from '../Student/student.validation';
 import { USER_ROLE } from './user.constant';
 import { UserControllers } from './user.controller';
+import { createAdminValidationSchema } from '../Admin/admin.validation';
 
 const router = express.Router();
 
 router.post(
-  '/',
-  auth(USER_ROLE.superAdmin, USER_ROLE.admin),
-  validateRequest(createStudentValidationSchema),
+  '/create-admin',
+  // auth(USER_ROLE.superAdmin, USER_ROLE.admin),
+  validateRequest(createAdminValidationSchema),
   UserControllers.createStudent,
 );
 

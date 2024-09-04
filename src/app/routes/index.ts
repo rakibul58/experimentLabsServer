@@ -3,6 +3,7 @@ import { AdminRoutes } from '../modules/Admin/admin.route';
 import { StudentRoutes } from '../modules/Student/student.route';
 import { UserRoutes } from '../modules/User/user.route';
 import { AuthRoutes } from '../modules/Auth/auth.route';
+import { OrganizationRoutes } from '../modules/Organization/organization.route';
 
 const router = Router();
 
@@ -22,6 +23,10 @@ const moduleRoutes = [
   {
     path: '/admins',
     route: AdminRoutes,
+  },
+  {
+    path: '/organizations',
+    route: OrganizationRoutes,
   },
 ];
 

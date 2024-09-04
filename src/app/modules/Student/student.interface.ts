@@ -1,47 +1,45 @@
 import { Model, Types } from 'mongoose';
 
-export type TUserName = {
-  firstName: string;
-  middleName: string;
-  lastName: string;
-};
-
-export type TGuardian = {
+// Guardian Type
+export type TGuardian  = {
   fatherName: string;
-  fatherOccupation: string;
-  fatherContactNo: string;
+  fatherEmail: string;
+  fatherPhone: string;
   motherName: string;
-  motherOccupation: string;
-  motherContactNo: string;
-};
+  motherPhone: string;
+  motherEmail: string;
+  localGuardianName: string;
+  localGuardianEmail: string;
+  localGuardianPhone: string;
+}
 
-export type TLocalGuardian = {
+// Student Interface
+export interface TStudent {
   name: string;
-  occupation: string;
-  contactNo: string;
-  address: string;
-};
-
-export type TStudent = {
-  id: string;
   user: Types.ObjectId;
-  name: TUserName;
-  gender: 'male' | 'female' | 'other';
-  dateOfBirth?: Date;
   email: string;
-  contactNo: string;
-  emergencyContactNo: string;
-  bloogGroup?: 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-';
-  presentAddress: string;
-  permanentAddress: string;
   guardian: TGuardian;
-  localGuardian: TLocalGuardian;
-  profileImg?: string;
-  admissionSemester: Types.ObjectId;
-  academicDepartment: Types.ObjectId;
-  academicFaculty: Types.ObjectId;
+  areaOfInterest: string[];
+  phone: string;
+  phoneCountryCode: string;
+  gender: string;
+  dateOfBirth: string;
+  address: string;
+  profileImg: string;
+  zip: string;
+  institution: Types.ObjectId;
+  class: string;
+  courses: {
+      course: string;
+      batch: string;
+      receipt: string;
+  }[];
+  devices: string[];
+  executionMentors: string[];
   isDeleted: boolean;
-};
+}
+
+
 
 //for creating static
 export interface StudentModel extends Model<TStudent> {
