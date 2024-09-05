@@ -132,11 +132,9 @@ const createAdminIntoDB = async (payload: ICreateAdmin) => {
       throw new AppError(httpStatus.BAD_REQUEST, 'Failed to create admin');
     }
 
-    payload.admin.user = newUser[0]._id; 
+    payload.admin.user = newUser[0]._id;
     // create a admin (transaction-2)
     const newAdmin = await Admin.create([payload.admin], { session });
-
-    
 
     if (!newAdmin.length) {
       throw new AppError(httpStatus.BAD_REQUEST, 'Failed to create admin');

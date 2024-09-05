@@ -67,7 +67,9 @@ userSchema.statics.isUserExistsByEmailAndOrganization = async function (
   email: string,
   organization: string,
 ) {
-  return await User.findOne({ email, organization }).select('+password').populate('organization');
+  return await User.findOne({ email, organization })
+    .select('+password')
+    .populate('organization');
 };
 
 userSchema.statics.isPasswordMatched = async function (
