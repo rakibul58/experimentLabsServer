@@ -2,6 +2,7 @@
 import { Model, Types } from 'mongoose';
 import { USER_ROLE } from './user.constant';
 import { IOrganization } from '../Organization/organization.interface';
+import { TAdmin } from '../Admin/admin.interface';
 
 export interface TUser {
   email: string;
@@ -12,6 +13,11 @@ export interface TUser {
   passwordChangedAt?: Date;
   isDeleted: boolean;
   organization: Types.ObjectId | IOrganization;
+}
+
+export interface ICreateAdmin {
+  user: TUser;
+  admin: TAdmin;
 }
 
 export interface UserModel extends Model<TUser> {

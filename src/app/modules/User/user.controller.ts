@@ -40,14 +40,7 @@ const createInstitute = catchAsync(async (req, res) => {
 });
 
 const createAdmin = catchAsync(async (req, res) => {
-  // const { password, admin: adminData } = req.body;
-
-  const result = await UserServices
-    .createAdminIntoDB
-    // req.file,
-    // password,
-    // adminData,
-    ();
+  const result = await UserServices.createAdminIntoDB(req.body);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

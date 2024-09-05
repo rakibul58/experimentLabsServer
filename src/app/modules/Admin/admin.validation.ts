@@ -11,15 +11,13 @@ export const createAdminValidationSchema = z.object({
   body: z.object({
     user: UserValidation.userValidationSchema,
     admin: z.object({
-      designation: z.string(),
-      name: z.string(),
-      dateOfBirth: z.string().optional(),
-      email: z.string().email(),
-      contactNo: z.string(),
-      emergencyContactNo: z.string(),
-      presentAddress: z.string(),
-      permanentAddress: z.string(),
-      profileImg: z.string(),
+      name: z.string({
+        required_error: 'Name is required',
+      }),
+      phone: z.string().optional(), // Optional String
+      phoneCountryCode: z.string().optional(), // Optional String
+      profileImg: z.string().nullable().optional(), // String with default null
+      isDeleted: z.boolean().default(false), // Boolean with default value false
     }),
   }),
 });
