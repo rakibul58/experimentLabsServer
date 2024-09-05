@@ -1,4 +1,1 @@
-export const studentSearchableFields = [
-  'email',
-  'name',
-];
+export const studentSearchableFields = ['email', 'name'];

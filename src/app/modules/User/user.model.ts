@@ -36,7 +36,8 @@ const userSchema = new Schema<TUser, UserModel>(
       default: false,
     },
     organization: {
-      type: String || null,
+      type: Schema.Types.ObjectId,
+      ref: 'Organization',
       default: null,
     },
   },
@@ -66,7 +67,7 @@ userSchema.statics.isUserExistsByEmailAndOrganization = async function (
   email: string,
   organization: string,
 ) {
-  return await User.findOne({ email, organization }).select('+password');
+  return await User.findOne({ email, organization }).select('+password').populate('organization');
 };
 
 userSchema.statics.isPasswordMatched = async function (

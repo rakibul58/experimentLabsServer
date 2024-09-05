@@ -3,4 +3,9 @@ export const SERVICES = {
   internship: 'internship',
 } as const;
 
-export const OrganizationSearchableFields = ["orgName", "officialEmail", "aboutOrg", "services"]
+export const OrganizationSearchableFields = [
+  'orgName',
+  'officialEmail',
+  'aboutOrg',
+  'services',
+];

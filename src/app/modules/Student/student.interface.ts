@@ -1,7 +1,7 @@
 import { Model, Types } from 'mongoose';
 
 // Guardian Type
-export type TGuardian  = {
+export type TGuardian = {
   fatherName: string;
   fatherEmail: string;
   fatherPhone: string;
@@ -11,7 +11,7 @@ export type TGuardian  = {
   localGuardianName: string;
   localGuardianEmail: string;
   localGuardianPhone: string;
-}
+};
 
 // Student Interface
 export interface TStudent {
@@ -30,16 +30,14 @@ export interface TStudent {
   institution: Types.ObjectId;
   class: string;
   courses: {
-      course: string;
-      batch: string;
-      receipt: string;
+    course: string;
+    batch: string;
+    receipt: string;
   }[];
   devices: string[];
   executionMentors: string[];
   isDeleted: boolean;
 }
-
-
 
 //for creating static
 export interface StudentModel extends Model<TStudent> {

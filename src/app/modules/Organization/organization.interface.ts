@@ -7,5 +7,5 @@ export interface IOrganization {
   aboutOrg: string;
   officialEmail: string;
   orgLogo: string;
-  services: TServices[]
+  services: TServices[];
 }

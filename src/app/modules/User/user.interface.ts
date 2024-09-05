@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { USER_ROLE } from './user.constant';
+import { IOrganization } from '../Organization/organization.interface';
 
 export interface TUser {
   email: string;
@@ -10,7 +11,7 @@ export interface TUser {
   googleId: string | null;
   passwordChangedAt?: Date;
   isDeleted: boolean;
-  organization: string | null;
+  organization: Types.ObjectId | IOrganization;
 }
 
 export interface UserModel extends Model<TUser> {

@@ -7,6 +7,11 @@ import { User } from '../User/user.model';
 import { TLoginUser } from './auth.interface';
 import { createToken, verifyToken } from './auth.utils';
 import { sendEmail } from '../../utils/sendEmail';
+import {
+  IOrganization,
+  TServices,
+} from '../Organization/organization.interface';
+import { USER_ROLE } from '../User/user.constant';
 
 const loginUser = async (payload: TLoginUser) => {
   // checking if the user is exist
@@ -16,7 +21,7 @@ const loginUser = async (payload: TLoginUser) => {
   );
 
   if (!user) {
-    throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');
+    throw new AppError(httpStatus.NOT_FOUND, 'This user is not found!');
   }
 
   // checking if the user is already deleted
@@ -30,10 +35,25 @@ const loginUser = async (payload: TLoginUser) => {
   if (!(await User.isPasswordMatched(payload?.password, user?.password)))
     throw new AppError(httpStatus.FORBIDDEN, 'Password do not matched');
 
+  if (user.role !== USER_ROLE.superAdmin) {
+    if (
+      !(user.organization as IOrganization).services.includes(
+        payload.service as TServices,
+      )
+    )
+      throw new AppError(
+        httpStatus.UNAUTHORIZED,
+        "This user doesn't have access to this service.",
+      );
+  }
+
   //create token and sent to the  client
   const jwtPayload = {
     email: user.email,
-    organization: user.organization,
+    organization:
+      user.organization !== null
+        ? user.organization.toString()
+        : user.organization,
     role: user.role,
   };
 
@@ -119,7 +139,10 @@ const refreshToken = async (token: string) => {
   }
   const jwtPayload = {
     email: user.email,
-    organization: user.organization,
+    organization:
+      user.organization !== null
+        ? user.organization.toString()
+        : user.organization,
     role: user.role,
   };
   const accessToken = createToken(
@@ -148,7 +171,10 @@ const forgetPassword = async (email: string, organization: string) => {
   }
   const jwtPayload = {
     email: user.email,
-    organization: user.organization,
+    organization:
+      user.organization !== null
+        ? user.organization.toString()
+        : user.organization,
     role: user.role,
   };
   const resetToken = createToken(

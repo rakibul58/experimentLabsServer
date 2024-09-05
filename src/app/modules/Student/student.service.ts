@@ -38,7 +38,7 @@ const getSingleStudentFromDB = async (id: string) => {
 };
 
 const updateStudentIntoDB = async (id: string, payload: Partial<TStudent>) => {
-  const { name, guardian, localGuardian, ...remainingStudentData } = payload;
+  const { name, guardian, ...remainingStudentData } = payload;
 
   const modifiedUpdatedData: Record<string, unknown> = {
     ...remainingStudentData,
@@ -67,11 +67,11 @@ const updateStudentIntoDB = async (id: string, payload: Partial<TStudent>) => {
     }
   }
 
-  if (localGuardian && Object.keys(localGuardian).length) {
-    for (const [key, value] of Object.entries(localGuardian)) {
-      modifiedUpdatedData[`localGuardian.${key}`] = value;
-    }
-  }
+  // if (localGuardian && Object.keys(localGuardian).length) {
+  //   for (const [key, value] of Object.entries(localGuardian)) {
+  //     modifiedUpdatedData[`localGuardian.${key}`] = value;
+  //   }
+  // }
 
   const result = await Student.findByIdAndUpdate(id, modifiedUpdatedData, {
     new: true,
